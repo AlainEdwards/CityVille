@@ -130,7 +130,7 @@ public class InitializationActivity extends Activity {
 	public void done(){
 		pb.setProgress(pb.getMax());
 		
-		Intent intent = new Intent(this, HomeActivity.class);
+		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 	}
 }
