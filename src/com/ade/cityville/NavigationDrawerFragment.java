@@ -118,6 +118,15 @@ public class NavigationDrawerFragment extends Fragment {
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
 						selectItem(position);
+						
+						switch(listDataHeader.get(position)){
+							case "About Us": //TODO: Create Intent and start the About Us activity
+								break;
+							case "Settings": //TODO: Create Intent and start the Settings activity
+								break;
+							case "Report": //TODO: Create Intent and start the Report activity
+								break;
+						}
 					}
 				});
 		mDrawerListView.setAdapter(listAdapter);
@@ -141,6 +150,16 @@ public class NavigationDrawerFragment extends Fragment {
                                         listDataHeader.get(groupPosition)).get(
                                         childPosition), Toast.LENGTH_SHORT)
                         .show();
+                switch(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition)){
+                	case "Grid View": ((HomeActivity) getActivity()).showGridView();
+                		break;
+                	case "Map View":((HomeActivity) getActivity()).showMapView();
+                		break;
+                	case "List View": ((HomeActivity) getActivity()).showListView();
+                		break;
+                	case "Favorites"://TODO: Add method to show favorites 
+                		break;
+                }
                 return false;
             }
         });

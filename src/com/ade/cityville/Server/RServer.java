@@ -53,7 +53,7 @@ public class RServer extends AsyncTask<Void, Void, String>{
 	}
 	
 	public static String sendCMD(String cmd) throws ClientProtocolException, IOException, JSONException{
-		if (c == null){return null;}
+		if (c == null){return null;} //TODO: FIX
 		HttpParams httpParams = new BasicHttpParams();
 		 HttpConnectionParams.setConnectionTimeout(httpParams,TIMEOUT_MILLISEC);
 		 HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
@@ -102,18 +102,22 @@ public class RServer extends AsyncTask<Void, Void, String>{
 	public static ArrayList<CityEvent> getAllEvents() throws NumberFormatException, ParseException, IOException, JSONException{
 		if (c == null){return null;}
 		ArrayList<CityEvent> list = new ArrayList<CityEvent>();
-		String[] events = sendCMD("le").split("+|+");
-		if (events != null && events.length > 0 && events[0] != "" && events[0] != " "){
-			for(String e: events){
-				String[] details = e.split("-|-");
-				if (details.length > 10){
-					list.add(new CityEvent(Integer.parseInt(details[0]),details[1],details[2],details[3],details[4],details[5],Float.parseFloat(details[6]),Double.parseDouble(details[7]),Integer.parseInt(details[8]),details[9],details[10]));
-				}else if (details.length <= 1){
-					//This is the end of the list.
-				}else{Log.e("Server - List events error", "events details has a length <= 1");}
+		String serverResponse = sendCMD("le");
+		if (serverResponse != null && !(serverResponse.equalsIgnoreCase("")) && !(serverResponse.equalsIgnoreCase(" ")) && serverResponse.length() > 0){
+			String[] events = serverResponse.split("+|+");
+			if (events != null && events.length > 0 && events[0] != "" && events[0] != " "){
+				for(String e: events){
+					String[] details = e.split("-|-");
+					if (details.length > 10){
+						list.add(new CityEvent(Integer.parseInt(details[0]),details[1],details[2],details[3],details[4],details[5],Float.parseFloat(details[6]),Double.parseDouble(details[7]),Integer.parseInt(details[8]),details[9],details[10],details[11]));
+					}else if (details.length <= 1){
+						//This is the end of the list.
+					}else{Log.e("Server - List events error", "events details has a length <= 1");}
+				}
 			}
 		}
 		return list;
+		
 	}
 
 	@Override

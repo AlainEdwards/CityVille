@@ -15,7 +15,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ade.cityville.R;
+import com.ade.cityville.*;
 
 /**
  * @author Operator
@@ -110,9 +110,9 @@ public class NDExpandableListAdapter extends BaseExpandableListAdapter{
         	case "Home":
         			headerImg.setImageResource(R.drawable.androidhome);
         		break;
-        		default:
+        	default:
         			headerImg.setVisibility(View.GONE);
-        			break;
+        		break;
         }
  
         return convertView;

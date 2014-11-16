@@ -5,34 +5,45 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class CityEvent {
+
+public class CityEvent implements Parcelable{
 	private float cost;
 	private double rating;
 	private int id, age;
-	private String date, time, name, description, img, location, phonenumber;
+	private String date, time, name, description, img, address, phonenumber, tags;
 	private Calendar datentime;
+	private Location location;
 	
 	public CityEvent(int aid, String adate, String atime, String aname, 
 			String alocation, String apn, float acost, double arating, int aage, 
-			String adescription, String aimg) throws ParseException{
+			String adescription, String atags, String aimg) throws ParseException{
 		
 		id = aid;
+		date = adate;
+		time = atime;
 		datentime = stringToCalendar(adate + "T" + atime, TimeZone.getTimeZone("GMT -4:00"));
 		name = aname;
-		location = alocation;
+		address = alocation;
 		phonenumber = apn;
 		cost = acost;
 		rating = arating;
 		age = aage;
 		description = adescription;
+		tags = atags;
 		img = aimg;
 		
+		location = AppData.getLatLongFromAddress(address);
+		if (location == null)
+		{location = new Location("error");}
 	}
 	
 	
 	public static Calendar stringToCalendar(String strDate, TimeZone timezone) throws ParseException {
-        String FORMAT_DATETIME = "yyyy-MM-dd'T'HH:mm:ss";
+        String FORMAT_DATETIME = "MM/dd/yyyy'T'HH:mm";
         SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_DATETIME);
         sdf.setTimeZone(timezone);
         Date date = sdf.parse(strDate);
@@ -40,6 +51,8 @@ public class CityEvent {
         cal.setTime(date);
         return cal;
     }
+	
+	
 
 
 	/**
@@ -171,6 +184,22 @@ public class CityEvent {
 
 
 	/**
+	 * @return the tags
+	 */
+	public String getTags() {
+		return tags;
+	}
+
+
+	/**
+	 * @param tags the tags to set
+	 */
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+
+	/**
 	 * @return the img
 	 */
 	public String getImg() {
@@ -189,7 +218,23 @@ public class CityEvent {
 	/**
 	 * @return the location
 	 */
-	public String getLocation() {
+	public String getAddress() {
+		return address;
+	}
+
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setAddress(String location) {
+		this.address = location;
+	}
+
+
+	/**
+	 * @return the location
+	 */
+	public Location getLocation() {
 		return location;
 	}
 
@@ -197,7 +242,7 @@ public class CityEvent {
 	/**
 	 * @param location the location to set
 	 */
-	public void setLocation(String location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 
@@ -232,5 +277,56 @@ public class CityEvent {
 	public void setDatentime(Calendar datentime) {
 		this.datentime = datentime;
 	}
+
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(name);
+		dest.writeInt(id);
+		dest.writeString(date);
+		dest.writeString(time);
+		dest.writeString(description);
+		dest.writeString(address);
+		dest.writeString(phonenumber);
+		dest.writeString(img);
+		dest.writeDouble(rating);
+		dest.writeFloat(cost);
+		dest.writeInt(age);
+		
+	}
+	
+	// this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<CityEvent> CREATOR = new Parcelable.Creator<CityEvent>() {
+        public CityEvent createFromParcel(Parcel in) {
+            return new CityEvent(in);
+        }
+
+        public CityEvent[] newArray(int size) {
+            return new CityEvent[size];
+        }
+    };
+    
+ // example constructor that takes a Parcel and gives you an object populated with it's values
+    private CityEvent(Parcel in) {
+        name = in.readString();
+        id = in.readInt();
+        date = in.readString();
+		time = in.readString();
+		description = in.readString();
+		address = in.readString();
+		phonenumber = in.readString();
+		img = in.readString();
+		rating = in.readDouble();
+		cost = in.readFloat();
+		age = in.readInt();
+         
+    }
 
 }

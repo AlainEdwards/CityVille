@@ -1,6 +1,5 @@
 package com.ade.cityville;
 
-import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -28,6 +27,10 @@ public class HomeActivity extends FragmentActivity implements
 
 	MainCollectionPagerAdapter mCollectionPagerAdapter;
 	ViewPager mViewPager;
+	private static HomeGridFragment homeGridFragment;
+	private static HomeListFragment homeListFragment;
+	private static HomeMapFragment homeMapFragment;
+	FragmentTransaction transaction;
 	
 	
 	
@@ -64,6 +67,15 @@ public class HomeActivity extends FragmentActivity implements
 		
 		mNavigationDrawerFragmentR.setUp(R.id.navigation_drawer_right,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
+		
+		homeGridFragment = new HomeGridFragment();
+		homeListFragment = new HomeListFragment();
+		homeMapFragment = new HomeMapFragment();
+		
+		transaction = getFragmentManager().beginTransaction();
+		transaction.replace(R.id.container, homeGridFragment);
+		transaction.addToBackStack(null);
+		transaction.commit();
 		
 		//---------------Initialize variables for the Tabs/view pager------------------------
 		/*final ActionBar actionBar = getActionBar();
@@ -225,6 +237,27 @@ public class HomeActivity extends FragmentActivity implements
 			((HomeActivity) activity).onSectionAttached(getArguments().getInt(
 					ARG_SECTION_NUMBER));
 		}
+	}
+	
+	public void showGridView(){
+		transaction = getFragmentManager().beginTransaction();
+		transaction.replace(R.id.container, homeGridFragment);
+		transaction.addToBackStack(null);
+		transaction.commit();
+		
+	}
+	public void showListView(){
+		transaction = getFragmentManager().beginTransaction();
+		transaction.replace(R.id.container, homeListFragment);
+		transaction.addToBackStack(null);
+		transaction.commit();
+	}
+	public void showMapView(){
+		transaction = getFragmentManager().beginTransaction();
+		transaction.replace(R.id.container, homeMapFragment);
+		transaction.addToBackStack(null);
+		transaction.commit();
+		
 	}
 
 }

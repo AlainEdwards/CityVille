@@ -15,6 +15,12 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+        
+        <!-- <fragment
+	       android:id="@+id/fragmentHomeMain"
+	       android:name="com.ade.cityville.HomeGridFragment"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" /> -->
 	        
     </FrameLayout>
 

@@ -12,7 +12,15 @@ public class HomeGridFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_home_grid, container, false);
+		View vi = inflater.inflate(R.layout.fragment_home_grid, container, false);
+		
+		if (AppData.getCityEventsList() == null || AppData.getCityEventsList().size() < 0){
+			
+		}else{
+			
+		}
+		
+		return vi;
 	}
 
 

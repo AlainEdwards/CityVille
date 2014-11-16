@@ -40,8 +40,8 @@ public class InitializationActivity extends Activity {
 			public void run() {
 			
 				
-				done();
-		/*//Make sure everything is up and running
+				//done();
+		//Make sure everything is up and running
 		tvProgress.setText("Initializing...");
 		if (presystemsCheck()){
 			tvProgress.setText("Initializing local vars...");
@@ -52,7 +52,7 @@ public class InitializationActivity extends Activity {
 			
 			//All checks are a GO, finish up
 			done();
-		}else{}*/
+		}else{}
 			}}).start();
 	}
 
