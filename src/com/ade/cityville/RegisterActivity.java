@@ -111,7 +111,7 @@ public class RegisterActivity extends Activity implements AsyncTaskCompleteListe
 	}
 	private void loginSuccessful(){
 		Toast.makeText(getApplicationContext(), "Your Registered and Logged In!", Toast.LENGTH_SHORT).show();
-
+		AppData.loggedIn = true;
 		Intent intent = new Intent(this, HomeActivity.class);
 		startActivity(intent);
 	}

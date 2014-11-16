@@ -40,6 +40,14 @@ public class LoginActivity extends Activity implements AsyncTaskCompleteListener
 		result = (TextView) findViewById(R.id.LoginResult);
 	}
 	
+	@Override
+	protected void onStart(){
+		super.onStart();
+		if(AppData.loggedIn){
+			loginSuccessful();
+		}
+	}
+	
 	public void register(View view){
 		Intent intent = new Intent(this, RegisterActivity.class);
 		startActivity(intent);
@@ -97,6 +105,7 @@ public class LoginActivity extends Activity implements AsyncTaskCompleteListener
 	}
 	private void loginSuccessful(){
 		Toast.makeText(getApplicationContext(), "Your Logged In!", Toast.LENGTH_SHORT).show();
+		AppData.loggedIn = true;
 
 		Intent intent = new Intent(this, HomeActivity.class);
 		startActivity(intent);

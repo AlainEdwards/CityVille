@@ -24,6 +24,7 @@ public class AppData {
 	private static ArrayList<ReportedArea> ReportsList = new ArrayList<ReportedArea>();
 	private static Location currentLocation;
 	private static Context c;
+	public static boolean loggedIn = false;
 
 	public static boolean initializeData(){
 		if (c == null){return false;}
