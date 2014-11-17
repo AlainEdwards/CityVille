@@ -1,6 +1,7 @@
 package com.ade.cityville;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,8 +24,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
-public class HomeMapFragment extends Fragment {
+public class HomeMapFragment extends Fragment implements Filterable{
 	GoogleMap map;
 	CircleOptions radiusIndicator;
 	Circle currentRadius;
@@ -39,10 +42,11 @@ public class HomeMapFragment extends Fragment {
 	
 	private static final double EARTH_RADIUS = 6378100.0;
 
+	private View vi;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
-		View vi = inflater.inflate(R.layout.fragment_home_map, container, false);
+		vi = inflater.inflate(R.layout.fragment_home_map, container, false);
 		
 		radiusIndicator = new CircleOptions();
 		
@@ -68,11 +72,12 @@ public class HomeMapFragment extends Fragment {
         
        // Get a handle to the Map Fragment
        mapFrag = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapHome));
-       map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapHome)).getMap();
+       map = mapFrag.getMap();
        map.setMyLocationEnabled(true);
+ 
        if (AppData.getCurrentLocation() != null){
        LatLng current = new LatLng(AppData.getCurrentLocation().getLatitude(), AppData.getCurrentLocation().getLongitude());
-       map.moveCamera(CameraUpdateFactory.newLatLngZoom(current, 18));}
+       map.moveCamera(CameraUpdateFactory.newLatLngZoom(current, 15));}
        
        map.setOnMyLocationButtonClickListener(new OnMyLocationButtonClickListener(){
 
@@ -100,18 +105,18 @@ public class HomeMapFragment extends Fragment {
 			return false;
 		}});
        
-       loadCityEvents();
+       loadCityEvents(AppData.getCityEventsList());
        loadReportedAreas();
        
 	}
 
 	
 
-	private void loadCityEvents() {
+	private void loadCityEvents(ArrayList<CityEvent> alCE) {
 	
-		if (AppData.getCityEventsList() != null && AppData.getCityEventsList().size() > 0 )
+		if (alCE != null && alCE.size() > 0 )
 		{
-			for (CityEvent ce: AppData.getCityEventsList()){
+			for (CityEvent ce: alCE){
 				Marker mark = map.addMarker(new MarkerOptions()
 				.title(ce.getName())
 				.snippet("Cost: $"+ce.getCost())
@@ -163,5 +168,53 @@ public class HomeMapFragment extends Fragment {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public Filter getFilter() {
+		
+		return new Filter()
+	       {
+	            @Override
+	            protected FilterResults performFiltering(CharSequence charSequence)
+	            {
+	                FilterResults results = new FilterResults();
+
+	                //If there's nothing to filter on, return the original data for your list
+	                if(charSequence == null || charSequence.length() == 0 || charSequence.equals(""))
+	                {
+	                    results.values = AppData.getCityEventsList();
+	                    results.count = AppData.getCityEventsList().size();
+	                }
+	                else
+	                {
+	                	ArrayList<CityEvent> filterResultsData = new ArrayList<CityEvent>();
+
+	                    for(CityEvent ce : AppData.getCityEventsList())
+	                    {
+	                        //In this loop, you'll filter through originalData and compare each item to charSequence.
+	                        //If you find a match, add it to your new ArrayList
+	                        //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
+	                        if(ce.getName().toLowerCase().contains(charSequence.toString().toLowerCase()))
+	                        {
+	                            filterResultsData.add(ce);
+	                        }
+	                    }            
+
+	                    results.values = filterResultsData;
+	                    results.count = filterResultsData.size();
+	                }
+
+	                return results;
+	            }
+
+	            @Override
+	            protected void publishResults(CharSequence charSequence, FilterResults filterResults)
+	            {
+	                map.clear();
+	                loadCityEvents((ArrayList<CityEvent>) filterResults.values);
+	                loadReportedAreas();
+	            }
+	        };
 	}
 }

@@ -2,11 +2,16 @@ package com.ade.cityville;
 
 import java.net.InetAddress;
 
+import com.ade.cityville.listeners.*;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class InitializationActivity extends Activity {
 	private TextView tvProgress;
@@ -28,6 +34,17 @@ public class InitializationActivity extends Activity {
 		tvProgress = (TextView) findViewById(R.id.textViewProgress);
 		pb = (ProgressBar) findViewById(R.id.progressBar);
 		
+		//Checks if the GPS is enabled
+		ContentResolver contentResolver = this.getBaseContext().getContentResolver();
+		LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		boolean gpsStatus = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);  
+		if (gpsStatus == false) {
+			Toast.makeText(this, "Please enable your gps settings", Toast.LENGTH_LONG).show();
+			Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);  
+				startActivity(gpsOptionsIntent);
+		}
+		LocationListener locationListener = new MyLocationListener(this);
+		lm.requestLocationUpdates(lm.GPS_PROVIDER, 1000*60*5, 6, locationListener);
 	}
 	
 	@Override
@@ -130,7 +147,7 @@ public class InitializationActivity extends Activity {
 	public void done(){
 		pb.setProgress(pb.getMax());
 		
-		Intent intent = new Intent(this, LoginActivity.class);
+		Intent intent = new Intent(this, HomeActivity.class);
 		startActivity(intent);
 	}
 }

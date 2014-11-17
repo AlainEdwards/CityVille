@@ -67,8 +67,6 @@
     <string name="title_activity_home_list">HomeListActivity</string>
     <string name="title_activity_home_map">HomeMapActivity</string>
     <string name="title_activity_city_event">CityEventActivity</string>
-    <string name="title_activity_login">Cityville Login</string>
-    <string name="title_activity_register">Cityville Register</string>
     
     <!-- Number patterns -->
     <string name="lat_lng_pattern">* ###.00000000;* -###.00000000</string>

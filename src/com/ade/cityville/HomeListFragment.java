@@ -64,4 +64,8 @@ public class HomeListFragment extends Fragment {
 		intent.putExtra("THE-CITY-EVENT", AppData.getCityEventsList().get(position));
 		startActivity(intent);
 	}
+	
+	public void searchEvents(String text){
+		HomeListFragment.this.listAdapter.getFilter().filter(text);
+	}
 }

@@ -1,41 +1,38 @@
 package com.ade.cityville.Server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
+import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ade.cityville.*;
+import com.ade.cityville.CityEvent;
+import com.ade.cityville.R;
 
 
 public class RServer extends AsyncTask<Void, Void, String>{
@@ -118,6 +115,30 @@ public class RServer extends AsyncTask<Void, Void, String>{
 		}
 		return list;
 		
+	}
+	
+	public static Bitmap getImg(String aurl){
+		try {
+	        URL url = new URL(aurl);
+	        HttpGet httpRequest = null;
+
+	        httpRequest = new HttpGet(url.toURI());
+
+	        HttpClient httpclient = new DefaultHttpClient();
+	        HttpResponse response = (HttpResponse) httpclient
+	                .execute(httpRequest);
+
+	        HttpEntity entity = response.getEntity();
+	        BufferedHttpEntity b_entity = new BufferedHttpEntity(entity);
+	        InputStream input = b_entity.getContent();
+
+	        Bitmap bitmap = BitmapFactory.decodeStream(input);
+
+	        return bitmap;
+	    } catch (Exception e) {
+	    	Log.e("Get Image From Server", e.toString());
+	    }
+		return null;
 	}
 
 	@Override
