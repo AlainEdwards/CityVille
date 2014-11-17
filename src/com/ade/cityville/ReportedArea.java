@@ -20,11 +20,18 @@ public class ReportedArea {
 		type = atype;
 		radius = aradius;
 		address = aadress;
-		longitude = along;
-		latitude = alat;
-		location = new Location(atype);
-		location.setLatitude(Double.parseDouble(alat));
-		location.setLongitude(Double.parseDouble(along));
+		if(!along.equals(null) && !alat.equals(null))
+		{
+			if ((!alat.equals("") && !alat.equals(" ")) && (!along.equals("") && !along.equals(" "))){
+				location = new Location(atype);
+				location.setLatitude(Double.parseDouble(alat));
+				location.setLongitude(Double.parseDouble(along));
+			}
+		}
+		else {
+			location = AppData.getLatLongFromAddress(aadress);
+			longitude = "" + location.getLatitude();
+			latitude = "" + location.getLongitude();}
 	}
 
 	/**

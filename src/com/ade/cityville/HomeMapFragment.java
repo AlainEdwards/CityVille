@@ -45,7 +45,7 @@ public class HomeMapFragment extends Fragment implements Filterable{
 	private View vi;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
+		if (vi == null){}
 		vi = inflater.inflate(R.layout.fragment_home_map, container, false);
 		
 		radiusIndicator = new CircleOptions();
