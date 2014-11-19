@@ -86,6 +86,10 @@ public class HomeEventListAdapter extends ArrayAdapter implements Filterable{
         
         return vi;
     }
+    
+    public ArrayList<CityEvent> getCurrentCEvents(){
+    	return events;
+    }
 
     @Override
 	public Filter getFilter() {

@@ -24,6 +24,7 @@ public class AppData {
 	private static ArrayList<ReportedArea> ReportsList = new ArrayList<ReportedArea>();
 	private static Location currentLocation;
 	private static Context c;
+	public static boolean loggedIn = false;
 
 	public static boolean initializeData(){
 		if (c == null){return false;}
@@ -64,8 +65,8 @@ public class AppData {
 		
 		try{
 		ReportsList.add(new ReportedArea("Police",5.0,"3400 Airport Rd Boca Raton, FL 33431",null,null));
-		ReportsList.add(new ReportedArea("Fire",10.0,"980 N Federal Hwy #200 Boca Raton, FL 33432",null,null));
-		ReportsList.add(new ReportedArea("Police",20.0,"5800 NW 2nd Ave Boca Raton, FL 33487",null,null));
+		ReportsList.add(new ReportedArea("Fire",30.0,"980 N Federal Hwy #200 Boca Raton, FL 33432",null,null));
+		ReportsList.add(new ReportedArea("Traffic",100.0,"5800 NW 2nd Ave Boca Raton, FL 33487",null,null));
 		}catch(Exception e){
 			Log.e("Initilize Data",e.toString());
 		}

@@ -147,7 +147,12 @@ public class InitializationActivity extends Activity {
 	public void done(){
 		pb.setProgress(pb.getMax());
 		
-		Intent intent = new Intent(this, HomeActivity.class);
-		startActivity(intent);
+		if(AppData.loggedIn){
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
+		} else {
+			Intent intent = new Intent(this, HomeActivity.class);
+			startActivity(intent);
+		}
 	}
 }

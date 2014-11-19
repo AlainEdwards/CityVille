@@ -134,6 +134,17 @@ public class HomeMapFragment extends Fragment implements Filterable{
 			int strokeColor = 0xFF0000FF;
 			
 			for (ReportedArea ra: AppData.getReportsList()){
+				if (ra.getType().equalsIgnoreCase("police")){
+					shadeColor = 0x880000FF;
+					strokeColor = 0xFF0000FF;
+				}else if (ra.getType().equalsIgnoreCase("fire")){
+					shadeColor = 0x88FF3333;
+					strokeColor = 0xFFFF3333;
+				}else if (ra.getType().equalsIgnoreCase("traffic")){
+					shadeColor = 0x88FF9933;
+					strokeColor = 0xFFFF6600;
+				}
+				
 				if (!ra.getLocation().getProvider().equals("error")){
 					radiusIndicator = new CircleOptions()
 					.radius(ra.getRadius())
