@@ -20,7 +20,7 @@ public class ReportedArea {
 		type = atype;
 		radius = aradius;
 		address = aadress;
-		if(!along.equals(null) && !alat.equals(null))
+		if(along != null && alat != null)
 		{
 			if ((!alat.equals("") && !alat.equals(" ")) && (!along.equals("") && !along.equals(" "))){
 				location = new Location(atype);
