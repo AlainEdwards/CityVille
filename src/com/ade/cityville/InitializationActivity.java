@@ -3,6 +3,8 @@ package com.ade.cityville;
 import java.net.InetAddress;
 
 import com.ade.cityville.listeners.*;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -45,18 +47,15 @@ public class InitializationActivity extends Activity {
 		}
 		LocationListener locationListener = new MyLocationListener(this);
 		lm.requestLocationUpdates(lm.GPS_PROVIDER, 1000*60*5, 6, locationListener);
+		 Parse.initialize(this, "qOkwubtF8mugPpjcf1RgaE3MfvNlkGNT58AlP70q", "qr41Q00Te0PfJ1KOlfz29olypPaNdKDxOvXwXAk3");
+		 checkParse();
 	}
 	
 	@Override
 	protected void onResume(){
 		super.onResume();
 		final Context c = this;
-		new Thread(new Runnable(){
-
-			@Override
-			public void run() {
-			
-				
+					
 				//done();
 		//Make sure everything is up and running
 		tvProgress.setText("Initializing...");
@@ -70,7 +69,7 @@ public class InitializationActivity extends Activity {
 			//All checks are a GO, finish up
 			done();
 		}else{}
-			}}).start();
+		
 	}
 
 	@Override
@@ -90,6 +89,11 @@ public class InitializationActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	public void checkParse(){
+		ParseObject testObject = new ParseObject("TestObject");
+		testObject.put("foo", "bar");
+		testObject.saveInBackground();
 	}
 	
 	public boolean presystemsCheck(){
@@ -124,8 +128,8 @@ public class InitializationActivity extends Activity {
 	}
 	
 	public void displayError(String title, String msg){
-		new AlertDialog.Builder(this)
-	    .setTitle(title)
+		final AlertDialog.Builder ad = new AlertDialog.Builder(this)
+		.setTitle(title)
 	    .setMessage(msg)
 	    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 	        public void onClick(DialogInterface dialog, int which) { 
@@ -140,12 +144,20 @@ public class InitializationActivity extends Activity {
 	            // do nothing
 	        }
 	     })*/
-	    .setIcon(android.R.drawable.ic_dialog_alert)
-	     .show();
+	    .setIcon(android.R.drawable.ic_dialog_alert);
+		
+		runOnUiThread(new Runnable(){
+
+			@Override
+			public void run() {
+				ad.show();
+			}});
 	}
 	
 	public void done(){
 		pb.setProgress(pb.getMax());
 		
+		Intent intent = new Intent(this, HomeActivity.class);
+		startActivity(intent);
 	}
 }
