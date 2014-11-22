@@ -33,6 +33,9 @@ import android.util.Log;
 
 import com.ade.cityville.CityEvent;
 import com.ade.cityville.R;
+import com.parse.GetCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 
 public class RServer extends AsyncTask<Void, Void, String>{
@@ -99,7 +102,7 @@ public class RServer extends AsyncTask<Void, Void, String>{
 	public static ArrayList<CityEvent> getAllEvents() throws NumberFormatException, ParseException, IOException, JSONException{
 		if (c == null){return null;}
 		ArrayList<CityEvent> list = new ArrayList<CityEvent>();
-		String serverResponse = sendCMD("le");
+		/*String serverResponse = sendCMD("le");
 		if (serverResponse != null && !(serverResponse.equalsIgnoreCase("")) && !(serverResponse.equalsIgnoreCase(" ")) && serverResponse.length() > 0){
 			String[] events = serverResponse.split("+|+");
 			if (events != null && events.length > 0 && events[0] != "" && events[0] != " "){
@@ -112,9 +115,23 @@ public class RServer extends AsyncTask<Void, Void, String>{
 					}else{Log.e("Server - List events error", "events details has a length <= 1");}
 				}
 			}
-		}
-		return list;
+		}*/
 		
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("CityEvent");
+		query.getInBackground("xWMyZ4YEGZ", new GetCallback<ParseObject>() {
+			@Override
+			public void done(ParseObject object, com.parse.ParseException e) {
+				CityEvent ce = new CityEvent();
+				ce.setName(object.getString("name"));
+				ce.setAddress(object.getString("address"));
+				ce.setAge(object.getInt("age"));
+				ce.setId(object.getInt("id"));
+				ce.setCost((float)object.get("cost"));
+				ce.setDate(object.getString("date"));
+				ce.setTime(object.getString("time"));
+			}
+		});
+		return list;
 	}
 	
 	public static Bitmap getImg(String aurl){

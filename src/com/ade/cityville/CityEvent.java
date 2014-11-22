@@ -18,6 +18,10 @@ public class CityEvent implements Parcelable{
 	private Calendar datentime;
 	private Location location;
 	
+	public CityEvent(){
+		
+	}
+	
 	public CityEvent(int aid, String adate, String atime, String aname, 
 			String alocation, String apn, float acost, double arating, int aage, 
 			String adescription, String atags, String aimg) throws ParseException{
