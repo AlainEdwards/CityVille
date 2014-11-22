@@ -45,8 +45,12 @@ public class InitializationActivity extends Activity {
 			Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);  
 				startActivity(gpsOptionsIntent);
 		}
+		
+		//Initialize periodic updates of location
 		LocationListener locationListener = new MyLocationListener(this);
 		lm.requestLocationUpdates(lm.GPS_PROVIDER, 1000*60*5, 6, locationListener);
+		
+		//Initialize Parse
 		 Parse.initialize(this, "qOkwubtF8mugPpjcf1RgaE3MfvNlkGNT58AlP70q", "qr41Q00Te0PfJ1KOlfz29olypPaNdKDxOvXwXAk3");
 		 checkParse();
 	}
@@ -157,6 +161,8 @@ public class InitializationActivity extends Activity {
 	public void done(){
 		pb.setProgress(pb.getMax());
 		
+		//TODO Change to Login Activity when done.
+		//Intent intent = new Intent(this, LoginActivity.class);
 		Intent intent = new Intent(this, HomeActivity.class);
 		startActivity(intent);
 	}

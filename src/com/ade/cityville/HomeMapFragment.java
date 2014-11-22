@@ -117,12 +117,15 @@ public class HomeMapFragment extends Fragment implements Filterable{
 		if (alCE != null && alCE.size() > 0 )
 		{
 			for (CityEvent ce: alCE){
-				Marker mark = map.addMarker(new MarkerOptions()
-				.title(ce.getName())
-				.snippet("Cost: $"+ce.getCost())
-				.position(new LatLng(ce.getLocation().getLatitude(),ce.getLocation().getLongitude())
-				));	
-				
+				if (ce.getLocation() != null){
+					if (!ce.getLocation().getProvider().equalsIgnoreCase("error")){
+						Marker mark = map.addMarker(new MarkerOptions()
+						.title(ce.getName())
+						.snippet("Cost: $"+ce.getCost())
+						.position(new LatLng(ce.getLocation().getLatitude(),ce.getLocation().getLongitude())
+						));	
+					}
+				}
 			}
 		}
 	}

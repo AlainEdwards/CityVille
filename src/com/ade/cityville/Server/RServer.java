@@ -33,6 +33,8 @@ import android.util.Log;
 
 import com.ade.cityville.CityEvent;
 import com.ade.cityville.R;
+import com.ade.cityville.ReportedArea;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -101,7 +103,7 @@ public class RServer extends AsyncTask<Void, Void, String>{
 	
 	public static ArrayList<CityEvent> getAllEvents() throws NumberFormatException, ParseException, IOException, JSONException{
 		if (c == null){return null;}
-		ArrayList<CityEvent> list = new ArrayList<CityEvent>();
+		final ArrayList<CityEvent> list = new ArrayList<CityEvent>();
 		/*String serverResponse = sendCMD("le");
 		if (serverResponse != null && !(serverResponse.equalsIgnoreCase("")) && !(serverResponse.equalsIgnoreCase(" ")) && serverResponse.length() > 0){
 			String[] events = serverResponse.split("+|+");
@@ -118,22 +120,56 @@ public class RServer extends AsyncTask<Void, Void, String>{
 		}*/
 		
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("CityEvent");
-		query.getInBackground("xWMyZ4YEGZ", new GetCallback<ParseObject>() {
+		
+		query.findInBackground(new FindCallback<ParseObject>() {
 			@Override
-			public void done(ParseObject object, com.parse.ParseException e) {
-				CityEvent ce = new CityEvent();
-				ce.setName(object.getString("name"));
-				ce.setAddress(object.getString("address"));
-				ce.setAge(object.getInt("age"));
-				ce.setId(object.getInt("id"));
-				ce.setCost((float)object.get("cost"));
-				ce.setDate(object.getString("date"));
-				ce.setTime(object.getString("time"));
+			public void done(List<ParseObject> objects,
+					com.parse.ParseException e) {
+				for(ParseObject object: objects){
+					CityEvent ce = new CityEvent();
+					ce.setName(object.getString("name"));
+					ce.setAddress(object.getString("address"));
+					ce.setAge(object.getInt("age"));
+					ce.setId(object.getObjectId());
+					ce.setCost(object.getDouble("cost"));
+					ce.setDate(object.getString("date"));
+					ce.setTime(object.getString("time"));
+					ce.setPhonenumber(object.getString("phonenumber"));
+					ce.setRating(object.getDouble("rating"));
+					ce.setDescription(object.getString("description"));
+					ce.setImg(object.getString("img"));
+					ce.setTags(object.getString("tags"));
+					list.add(ce);
+				}
 			}
 		});
 		return list;
 	}
 	
+	public static ArrayList<ReportedArea> getAllReportedAreas(){
+		final  ArrayList<ReportedArea> list = new  ArrayList<ReportedArea>();
+		
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("ReportedArea");
+		
+		query.findInBackground(new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> objects,
+					com.parse.ParseException e) {
+				for(ParseObject object: objects){
+					ReportedArea ra = new ReportedArea();
+					ra.setType(object.getString("type"));
+					ra.setId(object.getObjectId());
+					ra.setAddress(object.getString("address"));
+					ra.setRadius(object.getDouble("radius"));
+					ra.setLatitude(object.getString("latitude"));
+					ra.setLongitude(object.getString("longitude"));
+					list.add(ra);
+				}
+			}
+		});
+		
+		return list;
+	}
 	public static Bitmap getImg(String aurl){
 		try {
 	        URL url = new URL(aurl);

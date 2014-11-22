@@ -11,9 +11,10 @@ import android.os.Parcelable;
 
 
 public class CityEvent implements Parcelable{
-	private float cost;
+	private double cost;
 	private double rating;
-	private int id, age;
+	String id;
+	private int age;
 	private String date, time, name, description, img, address, phonenumber, tags;
 	private Calendar datentime;
 	private Location location;
@@ -22,8 +23,8 @@ public class CityEvent implements Parcelable{
 		
 	}
 	
-	public CityEvent(int aid, String adate, String atime, String aname, 
-			String alocation, String apn, float acost, double arating, int aage, 
+	public CityEvent(String aid, String adate, String atime, String aname, 
+			String alocation, String apn, double acost, double arating, int aage, 
 			String adescription, String atags, String aimg) throws ParseException{
 		
 		id = aid;
@@ -62,7 +63,7 @@ public class CityEvent implements Parcelable{
 	/**
 	 * @return the cost
 	 */
-	public float getCost() {
+	public double getCost() {
 		return cost;
 	}
 
@@ -70,7 +71,7 @@ public class CityEvent implements Parcelable{
 	/**
 	 * @param cost the cost to set
 	 */
-	public void setCost(float cost) {
+	public void setCost(double cost) {
 		this.cost = cost;
 	}
 
@@ -94,7 +95,7 @@ public class CityEvent implements Parcelable{
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -102,7 +103,7 @@ public class CityEvent implements Parcelable{
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -136,6 +137,12 @@ public class CityEvent implements Parcelable{
 	 */
 	public void setDate(String date) {
 		this.date = date;
+		
+		try {
+			datentime = stringToCalendar(getDate() + "T" + getTime(), TimeZone.getTimeZone("GMT -4:00"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -152,6 +159,11 @@ public class CityEvent implements Parcelable{
 	 */
 	public void setTime(String time) {
 		this.time = time;
+		try {
+			datentime = stringToCalendar(getDate() + "T" + getTime(), TimeZone.getTimeZone("GMT -4:00"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -223,6 +235,11 @@ public class CityEvent implements Parcelable{
 	 * @return the location
 	 */
 	public String getAddress() {
+		
+		location = AppData.getLatLongFromAddress(address);
+		if (location == null)
+		{location = new Location("error");}
+		
 		return address;
 	}
 
@@ -230,8 +247,11 @@ public class CityEvent implements Parcelable{
 	/**
 	 * @param location the location to set
 	 */
-	public void setAddress(String location) {
-		this.address = location;
+	public void setAddress(String aaddress) {
+		this.address = aaddress;
+		location = AppData.getLatLongFromAddress(address);
+		if (location == null)
+		{location = new Location("error");}
 	}
 
 
@@ -285,7 +305,6 @@ public class CityEvent implements Parcelable{
 
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -293,7 +312,7 @@ public class CityEvent implements Parcelable{
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(name);
-		dest.writeInt(id);
+		dest.writeString(id);
 		dest.writeString(date);
 		dest.writeString(time);
 		dest.writeString(description);
@@ -301,7 +320,7 @@ public class CityEvent implements Parcelable{
 		dest.writeString(phonenumber);
 		dest.writeString(img);
 		dest.writeDouble(rating);
-		dest.writeFloat(cost);
+		dest.writeDouble(cost);
 		dest.writeInt(age);
 		
 	}
@@ -320,7 +339,7 @@ public class CityEvent implements Parcelable{
  // example constructor that takes a Parcel and gives you an object populated with it's values
     private CityEvent(Parcel in) {
         name = in.readString();
-        id = in.readInt();
+        id = in.readString();
         date = in.readString();
 		time = in.readString();
 		description = in.readString();
