@@ -14,7 +14,7 @@ public class CityEventActivity extends Activity {
 	private CityEvent aCityEvent;
 	private int eventPostion;
 	private TabHost thMain;
-	private TextView tvName, tvCost, tvAge;
+	private TextView eventName, eventDate, eventAge, eventAddress, eventTime, eventPhone, eventCost, eventDescription;
 	private ImageView ivIcon;
 
 	@Override
@@ -22,15 +22,28 @@ public class CityEventActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_city_event);
 		
-		ivIcon = (ImageView) findViewById(R.id.imageViewCEIcon);
-		tvName = (TextView) findViewById(R.id.textViewCEName);
-		tvCost = (TextView) findViewById(R.id.textViewCECost);
-		tvAge = (TextView) findViewById(R.id.textViewCEAge);
+		eventName 			= (TextView) findViewById(R.id.eventName);
+		eventDate 			= (TextView) findViewById(R.id.eventDate);
+		eventAge 			= (TextView) findViewById(R.id.eventAge);
+		eventAddress 		= (TextView) findViewById(R.id.eventAddress);
+		eventTime 			= (TextView) findViewById(R.id.eventTime);
+		eventPhone 			= (TextView) findViewById(R.id.eventPNumber);
+		eventCost 			= (TextView) findViewById(R.id.eventCost);
+		eventDescription 	= (TextView) findViewById(R.id.eventDescription);
 		
-		Intent mIntent = getIntent();
-		aCityEvent = (CityEvent) mIntent.getParcelableExtra("THE-CITY-EVENT");
+		Bundle b = getIntent().getExtras();
+		int index = b.getInt("id");
+		aCityEvent = AppData.getCityEventsList().get(index);
+		eventName.setText(aCityEvent.getName());
+		eventAge.setText(aCityEvent.getAge()+"");
+		eventDate.setText(aCityEvent.getDate());
+		eventAddress.setText(aCityEvent.getAddress());
+		eventTime.setText(aCityEvent.getTime());
+		eventPhone.setText(aCityEvent.getPhonenumber());
+		eventCost.setText("$"+aCityEvent.getCost());
+		eventDescription.setText(aCityEvent.getDescription());
 		//eventPostion = mIntent.getIntExtra("CITY_EVENT_POSITION", 0);
-		
+		/*
 		if (aCityEvent != null){
 			String image = aCityEvent.getImg();
 			if (image.equalsIgnoreCase("") || image.equalsIgnoreCase(" ") || image == null){
@@ -42,6 +55,7 @@ public class CityEventActivity extends Activity {
 			tvCost.setText("Cost: "+ aCityEvent.getCost());
 			tvAge.setText("Age: "+ aCityEvent.getAge() + "+");
 		}
+		*/
 	}
 
 	@Override

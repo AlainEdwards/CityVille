@@ -9,6 +9,7 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.database.MatrixCursor;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -135,7 +136,12 @@ public class HomeActivity extends FragmentActivity implements
         }*/
         
       //-----------------------------------------End--------------------------------------------
-		
+
+		 // set the volume controls to control the media stream in the app
+       setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        //Create, initialize and then load the Sound manager
+        SoundManager.getInstance(this);
+        SoundManager.muted = false;
 		
 	}
 
@@ -320,5 +326,11 @@ public class HomeActivity extends FragmentActivity implements
 	public void closeND(){
 		
 	}
-
+	@Override
+	protected void onDestroy(){
+		super.onDestroy();
+		// uncomment on release
+		//AppData.loggedIn = false;
+		SoundManager.cleanup();
+	}
 }

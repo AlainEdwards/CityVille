@@ -160,10 +160,15 @@ public class InitializationActivity extends Activity {
 	
 	public void done(){
 		pb.setProgress(pb.getMax());
-		
-		//TODO Change to Login Activity when done.
-		//Intent intent = new Intent(this, LoginActivity.class);
-		Intent intent = new Intent(this, HomeActivity.class);
+		Intent intent;
+		intent = new Intent(this, HomeActivity.class);
+		/*uncomment on release
+		if(AppData.loggedIn){
+			intent = new Intent(this, HomeActivity.class);
+		} else {
+			intent = new Intent(this, LoginActivity.class);
+		}
+		//*/
 		startActivity(intent);
 	}
 }

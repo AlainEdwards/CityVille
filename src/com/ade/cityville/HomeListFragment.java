@@ -76,6 +76,7 @@ public class HomeListFragment extends Fragment {
 	}
 	
 	protected void toCityEventActivity(CityEvent ce) {
+		SoundManager.playSound(6, 1);
 		Intent intent = new Intent(getActivity(), CityEventActivity.class);
 		//intent.putExtra("CITY_EVENT_Name", position);
 		intent.putExtra("THE-CITY-EVENT", ce);

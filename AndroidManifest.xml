@@ -59,15 +59,18 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:noHistory="true" >
         </activity>
         <activity
             android:name=".AsyncTaskCompleteListener"
-            android:label="@string/title_activity_async_task_complete_listener" >
+            android:label="@string/title_activity_async_task_complete_listener"
+            android:noHistory="true" >
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:label="@string/title_activity_register"
+            android:noHistory="true" >
         </activity>
         <activity
             android:name=".SettingsActivity"

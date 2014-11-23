@@ -106,8 +106,7 @@ public class HomeMapFragment extends Fragment implements Filterable{
 
 		@Override
 		public void onMapClick(LatLng arg0) {
-			
-			
+			SoundManager.playSound(6, 1);
 		}});
        
        map.setOnMarkerClickListener(new OnMarkerClickListener(){

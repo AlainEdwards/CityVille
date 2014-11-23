@@ -125,6 +125,7 @@ public class ReportAreaActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				SoundManager.playSound(6, 1);
 				if (etRadius.getText().toString().equals("") || etRadius.getText().toString().equalsIgnoreCase(" ") || etRadius.getText() == null){
 					radius = 0;
 					setRadius();
@@ -138,6 +139,7 @@ public class ReportAreaActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				SoundManager.playSound(6, 1);
 				if (validate() == true){
 					if (postReport(v)){
 						AppData.updateReportedAreas();

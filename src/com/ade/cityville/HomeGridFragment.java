@@ -218,9 +218,11 @@ public class HomeGridFragment extends Fragment implements OnClickListener, Filte
 	}
 	
 	protected void toCityEventActivity(int position) {
+		SoundManager.playSound(6, 1);
 		Intent intent = new Intent(getActivity(), CityEventActivity.class);
-		//intent.putExtra("CITY_EVENT_Name", position);
-		intent.putExtra("THE-CITY-EVENT", AppData.getCityEventsList().get(position));
+		Bundle b = new Bundle();
+		b.putInt("id", position); //Your id
+		intent.putExtras(b); //Put your id to your next Intent
 		startActivity(intent);
 	}
 

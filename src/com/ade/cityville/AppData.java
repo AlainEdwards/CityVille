@@ -28,6 +28,7 @@ public class AppData {
 	private static Location currentLocation;
 	private static Context c;
 	public static boolean loggedIn = false;
+	public static String email;
 	private static boolean filtersActivated;
 
 	public enum TrackerName {
@@ -58,7 +59,8 @@ public class AppData {
 		
 		try{
 		//TODO Remove on release
-		/*CityEventsList.add(new CityEvent("0","11/14/2014","12:00","Cleanup the park", "901 NW 178th Ave Pembroke Pines, FL 33029","954 205-1872", 0,5, 13, "","fun","1.png" ));
+		//*
+		CityEventsList.add(new CityEvent("0","11/14/2014","12:00","Cleanup the park", "901 NW 178th Ave Pembroke Pines, FL 33029","954 205-1872", 0,5, 13, "Picking up garbage is fun, YEAH!!!","fun","1.png" ));
 		CityEventsList.add(new CityEvent("1","11/15/2014","1:00","Rose G Price Park", "901 NW 208th Ave , Hollywood, FL 33029","954 205-1872", 0,5, 13, "","fun","" ));
 		CityEventsList.add(new CityEvent("2","11/16/2014","2:00","Frontier Trails Park", "Southwest Ranches, FL 33332","954 205-1872", 10,5, 0, "","fun","" ));
 		CityEventsList.add(new CityEvent("3","11/17/2014","3:00","HAPPI Farm", "17800 SW 52nd Ct Southwest Ranches, FL 33331","(954) 629-8133", 1,4, 10, "","fun","" ));
@@ -75,7 +77,8 @@ public class AppData {
 		CityEventsList.add(new CityEvent("11","11/27/2014","1:00","Cinemark Palace 20 Movie Night", "3200 Airport Rd Boca Raton, FL 33431","(561) 395-4695", 0,5, 13, "","Enetertainment,fun","" ));
 		CityEventsList.add(new CityEvent("12","11/31/2014","2:00","University Woodlands Park", "University Woodlands Park, Boca Raton, FL 33434","954 205-1872", 10,5, 0, "","fun","" ));
 		CityEventsList.add(new CityEvent("13","11/17/2014","3:00","HAPPI Farm", "17800 SW 52nd Ct Southwest Ranches, FL 33331","(954) 629-8133", 1,4, 10, "","fun","" ));
-		CityEventsList.add(new CityEvent("14","11/18/2014","4:00","Naacp", "13230 NW 7th Ave North Miami, FL 33168","(305) 685-8694", 8,5, 18, "","fun","" ));*/
+		CityEventsList.add(new CityEvent("14","11/18/2014","4:00","Naacp", "13230 NW 7th Ave North Miami, FL 33168","(305) 685-8694", 8,5, 18, "","fun","" ));
+		//*/
 		}catch(Exception e){
 			Log.e("Initilize Data",e.toString());
 		}

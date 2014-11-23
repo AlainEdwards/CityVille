@@ -87,6 +87,7 @@ public class PostEventActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				SoundManager.playSound(6, 1);
 				if (validate() == true){
 					if (postEvent(v)){
 						AppData.updateCityEvents();
