@@ -8,6 +8,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -109,7 +110,7 @@ public class HomeMapFragment extends Fragment implements Filterable{
 			SoundManager.playSound(6, 1);
 		}});
        
-       map.setOnMarkerClickListener(new OnMarkerClickListener(){
+       /*map.setOnMarkerClickListener(new OnMarkerClickListener(){
 
 		@Override
 		public boolean onMarkerClick(Marker arg0) {
@@ -117,6 +118,20 @@ public class HomeMapFragment extends Fragment implements Filterable{
 			intent.putExtra("THE-CITY-EVENT", findCityEvent(arg0.getTitle()));
 			startActivity(intent);
 			return false;
+		}});*/
+       
+       map.setOnInfoWindowClickListener(new OnInfoWindowClickListener(){
+
+		@Override
+		public void onInfoWindowClick(Marker marker) {
+			Intent intent = new Intent(getActivity(), CityEventActivity.class);
+			//intent.putExtra("THE-CITY-EVENT", findCityEvent(marker.getTitle()));
+			
+			Bundle b = new Bundle();
+			b.putInt("id", findCityEventPosition(marker.getTitle())); //Your id
+			intent.putExtras(b); //Put your id to your next Intent
+			
+			startActivity(intent);
 		}});
        
        loadCityEvents(AppData.getCityEventsList());
@@ -131,11 +146,17 @@ public class HomeMapFragment extends Fragment implements Filterable{
 		if (alCE != null && alCE.size() > 0 )
 		{
 			for (CityEvent ce: alCE){
+				String cost = "";
+				if (ce.getCost() <= 0.0){
+					cost = "Free";
+				}else{
+					cost = "$" + ce.getCost();
+				}
 				if (ce.getLocation() != null){
 					if (!ce.getLocation().getProvider().equalsIgnoreCase("error")){
 						Marker mark = map.addMarker(new MarkerOptions()
 						.title(ce.getName())
-						.snippet("Cost: $"+ce.getCost())
+						.snippet("" + ce.getDate() + " @ " + ce.getTime() + ", Cost: "+ cost)
 						.position(new LatLng(ce.getLocation().getLatitude(),ce.getLocation().getLongitude())
 						));	
 					}
@@ -196,6 +217,18 @@ public class HomeMapFragment extends Fragment implements Filterable{
 		}
 		
 		return null;
+	}
+	
+	public int findCityEventPosition(String title){
+		int i =0;
+		for (CityEvent ce: AppData.getCityEventsList()){
+			if (ce.getName().equals(title)){
+				return i;
+			}
+			i++;
+		}
+		
+		return 0;
 	}
 
 	@Override

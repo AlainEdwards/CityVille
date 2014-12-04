@@ -59,7 +59,7 @@ public class AppData {
 		
 		try{
 		//TODO Remove on release
-		//*
+		/*
 		CityEventsList.add(new CityEvent("0","11/14/2014","12:00","Cleanup the park", "901 NW 178th Ave Pembroke Pines, FL 33029","954 205-1872", 0,5, 13, "Picking up garbage is fun, YEAH!!!","fun","1.png" ));
 		CityEventsList.add(new CityEvent("1","11/15/2014","1:00","Rose G Price Park", "901 NW 208th Ave , Hollywood, FL 33029","954 205-1872", 0,5, 13, "","fun","" ));
 		CityEventsList.add(new CityEvent("2","11/16/2014","2:00","Frontier Trails Park", "Southwest Ranches, FL 33332","954 205-1872", 10,5, 0, "","fun","" ));

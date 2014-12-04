@@ -68,11 +68,14 @@ public class HomeEventListAdapter extends ArrayAdapter implements Filterable{
         tv_EventTime.setText(events.get(position).getDate() + " @ " + events.get(position).getTime());
         
         final String image = events.get(position).getImg(); final CityEvent tempce = events.get(position);
-        if (image.equalsIgnoreCase("") || image.equalsIgnoreCase(" ") || image == null){
+        if ( image == null){
         	iv_EventIcon.setImageResource(getEventIcon(events.get(position).getName().substring(0, 1).toLowerCase()));
-        }else{
+        }else if (image.equalsIgnoreCase("") || image.equalsIgnoreCase(" ")){
+        	iv_EventIcon.setImageResource(getEventIcon(events.get(position).getName().substring(0, 1).toLowerCase()));
+        }
+        else{
         	//iv_EventIcon.setImageURI(Uri.parse(c.getString(R.string.image_server_address) + image));
-        	new Thread(new Runnable(){//Cannot run http request on main thread
+        	/*new Thread(new Runnable(){//Cannot run http request on main thread
 
 				@Override
 				public void run() {
@@ -80,7 +83,7 @@ public class HomeEventListAdapter extends ArrayAdapter implements Filterable{
 					if (bm !=null){
 					iv_EventIcon.setImageBitmap(bm);}
 					else{iv_EventIcon.setImageResource(getEventIcon(tempce.getName().substring(0, 1).toLowerCase()));}
-				}});
+				}});*/
         }
         
         

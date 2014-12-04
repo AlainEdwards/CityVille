@@ -76,10 +76,10 @@ public class HomeGridFragment extends Fragment implements OnClickListener, Filte
 			View.setOnClickListener(this);
 			
 			final String image = ce.getImg(); final CityEvent tempce = ce;
-	        if (image.equalsIgnoreCase("") || image.equalsIgnoreCase(" ") || image == null){
+	        //if (image.equalsIgnoreCase("") || image.equalsIgnoreCase(" ") || image == null){
 	        	View.getIvIcon().setImageResource(AppData.getEventIcon(ce.getName().substring(0, 1).toLowerCase()));
-	        }else{
-	        	//View.getIvIcon().setImageURI(Uri.parse(getString(R.string.image_server_address) + image));
+	       /*}else{
+	        	View.getIvIcon().setImageURI(Uri.parse(getString(R.string.image_server_address) + image));
 	        	getActivity().runOnUiThread(new Runnable(){ //Cannot run http request on main thread
 
 					@Override
@@ -90,7 +90,7 @@ public class HomeGridFragment extends Fragment implements OnClickListener, Filte
 						
 					}});
 	        	
-	        }
+	        }*/
 			
 			View.setBackgroundResource(R.color.light_gray);
 			View.getTvTitle().setPadding(5, 0, 0, 0);
