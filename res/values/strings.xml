@@ -87,5 +87,6 @@
     <string name="title_activity_register">Register</string>
     <string name="title_activity_report_area">Report Area</string>
     <string name="title_activity_post_event">Post Event</string>
+    <string name="title_activity_image_button">ImageButton</string>
 
 </resources>

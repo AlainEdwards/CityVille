@@ -162,7 +162,7 @@ public class InitializationActivity extends Activity {
 		pb.setProgress(pb.getMax());
 		Intent intent;
 		intent = new Intent(this, HomeActivity.class);
-		/*uncomment on release
+		//*uncomment on release
 		if(AppData.loggedIn){
 			intent = new Intent(this, HomeActivity.class);
 		} else {
