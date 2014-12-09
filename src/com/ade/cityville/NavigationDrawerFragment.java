@@ -164,14 +164,14 @@ public class NavigationDrawerFragment extends Fragment {
             public boolean onChildClick(ExpandableListView parent, View v,
                     int groupPosition, int childPosition, long id) {
         		SoundManager.playSound(6, 1);
-                Toast.makeText(
+                /*Toast.makeText(
                         getActivity(),
                         listDataHeader.get(groupPosition)
                                 + " : "
                                 + listDataChild.get(
                                         listDataHeader.get(groupPosition)).get(
                                         childPosition), Toast.LENGTH_SHORT)
-                        .show();
+                        .show();*/
                 switch(listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition)){
                 	case "Grid View": ((HomeActivity) getActivity()).showGridView();
                 		break;
@@ -190,9 +190,9 @@ public class NavigationDrawerFragment extends Fragment {
 		    @Override
 		    public void onGroupExpand(int groupPosition) {
 				SoundManager.playSound(6, 1);
-		        Toast.makeText(getActivity(),
+		        /*Toast.makeText(getActivity(),
 		                listDataHeader.get(groupPosition) + " Expanded",
-		                Toast.LENGTH_SHORT).show();
+		                Toast.LENGTH_SHORT).show();*/
 		        switch(listDataHeader.get(groupPosition)){
 				case "About Us":
 					//Displays an alert dialog box displying the group members

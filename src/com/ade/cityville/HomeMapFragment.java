@@ -181,6 +181,9 @@ public class HomeMapFragment extends Fragment implements Filterable{
 				}else if (ra.getType().equalsIgnoreCase("traffic")){
 					shadeColor = 0x88FF9933;
 					strokeColor = 0xFFFF6600;
+				}else if (ra.getType().equalsIgnoreCase("other")){
+					shadeColor = 0x88DCDCDC;
+					strokeColor = 0xFFA9A9A9;
 				}
 				
 				if (!ra.getLocation().getProvider().equals("error")){

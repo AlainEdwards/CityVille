@@ -284,6 +284,10 @@ public class ReportAreaActivity extends Activity {
 					shadeColor = 0x88FF9933;
 					strokeColor = 0xFFFF6600;
 				}
+				else if (type.equalsIgnoreCase("other")){
+					shadeColor = 0x88DCDCDC;
+					strokeColor = 0xFFA9A9A9;
+				}
 				
 				/*if (radiusUnits.getSelectedItem().equals("ft")){
 					radius = Integer.parseInt(etRadius.getText().toString()) / 3.28084;
