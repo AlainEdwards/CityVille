@@ -32,7 +32,8 @@ public class HomeGridFragment extends Fragment implements OnClickListener, Filte
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		vi = inflater.inflate(R.layout.fragment_home_grid, container, false);
 		AppData.updateCityEvents();
-		if (AppData.getCityEventsList() != null || AppData.getCityEventsList().size() > 0){
+		if (AppData.getCityEventsList() != null || 
+				AppData.getCityEventsList().size() > 0){
 			generateView(AppData.getCityEventsList());
 		}else{}
 		

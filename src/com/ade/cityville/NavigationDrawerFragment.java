@@ -124,16 +124,7 @@ public class NavigationDrawerFragment extends Fragment {
 						selectItem(position);
 						switch(listDataHeader.get(position)){
 							case "About Us":
-								//Displays an alert dialog box displying the group members
-								new AlertDialog.Builder(getActivity())
-							    .setTitle("About Us")
-							    .setMessage(getString(R.string.about_group))
-							    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-							        public void onClick(DialogInterface dialog, int which) { 
-							        }
-							     })
-							    .setIcon(R.drawable.ic_about)
-							     .show();
+								startActivity(new Intent(getActivity(), ImageButton.class));
 								break;
 							case "Settings": 
 								Intent intent = new Intent(getActivity(), SettingsActivity.class);
@@ -195,16 +186,7 @@ public class NavigationDrawerFragment extends Fragment {
 		                Toast.LENGTH_SHORT).show();*/
 		        switch(listDataHeader.get(groupPosition)){
 				case "About Us":
-					//Displays an alert dialog box displying the group members
-					new AlertDialog.Builder(getActivity())
-				    .setTitle("About Us")
-				    .setMessage(getString(R.string.about_group))
-				    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				        public void onClick(DialogInterface dialog, int which) { 
-				        }
-				     })
-				    .setIcon(R.drawable.ic_about)
-				     .show();
+					startActivity(new Intent(getActivity(), ImageButton.class));
 					break;
 				case "Settings": 
 					Intent intent = new Intent(getActivity(), SettingsActivity.class);
