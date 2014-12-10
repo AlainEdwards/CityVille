@@ -26,7 +26,8 @@ import android.widget.Filterable;
 import android.widget.RelativeLayout;
 
 public class HomeGridFragment extends Fragment implements OnClickListener, Filterable{
-	View vi;
+	private View vi;
+	private ArrayList<CityEvent> filteredResults = null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +35,12 @@ public class HomeGridFragment extends Fragment implements OnClickListener, Filte
 		AppData.updateCityEvents();
 		if (AppData.getCityEventsList() != null || 
 				AppData.getCityEventsList().size() > 0){
-			generateView(AppData.getCityEventsList());
+			
+			if (filteredResults != null){
+				generateView(filteredResults);
+			}else{
+				generateView(AppData.getCityEventsList());
+			}
 		}else{}
 		
 		
@@ -241,8 +247,17 @@ public class HomeGridFragment extends Fragment implements OnClickListener, Filte
 	                //If there's nothing to filter on, return the original data for your list
 	                if(charSequence == null || charSequence.length() == 0 || charSequence.equals(""))
 	                {
-	                    results.values = AppData.getCityEventsList();
-	                    results.count = AppData.getCityEventsList().size();
+	                	ArrayList<CityEvent> checkedEvents = new ArrayList<CityEvent>();
+	                	for (CityEvent ce: AppData.getCityEventsList()){
+		                	if (AppData.checkFilters(ce) && AppData.checkAgeRestriction(ce)){
+		                		checkedEvents.add(ce);
+		                	}
+	                	}
+	                	
+	                	//results.values = AppData.getCityEventsList();
+	                    //results.count = AppData.getCityEventsList().size();
+	                	results.values = checkedEvents;
+                    	results.count = checkedEvents.size();
 	                }
 	                else
 	                {
@@ -255,7 +270,9 @@ public class HomeGridFragment extends Fragment implements OnClickListener, Filte
 	                        //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
 	                        if(ce.getName().toLowerCase().contains(charSequence.toString().toLowerCase()))
 	                        {
-	                            filterResultsData.add(ce);
+	                        	if (AppData.checkFilters(ce) && AppData.checkAgeRestriction(ce)){
+	                        		filterResultsData.add(ce);
+	                        	}
 	                        }
 	                    }            
 
@@ -270,7 +287,20 @@ public class HomeGridFragment extends Fragment implements OnClickListener, Filte
 	            protected void publishResults(CharSequence charSequence, FilterResults filterResults)
 	            {
 	                //TODO Update view here, by clearing the view before redrawing it.
+	            	if (((ArrayList<CityEvent>) filterResults.values).size() <= 0){
+	            		filteredResults = new ArrayList<CityEvent>();
+	            		HomeActivity.getHomeGridFragment().getView().postInvalidate();
+	            		//HomeActivity.getHomeGridFragment().onCreate(null);
+	            		//HomeActivity.getHomeGridFragment().getView().invalidate();
+	            	}else{
+	            		filteredResults = (ArrayList<CityEvent>) filterResults.values;
+	            		HomeActivity.getHomeGridFragment().getView().postInvalidate();
+	            		//HomeActivity.getHomeGridFragment().onCreate(null);
+		            	//HomeActivity.getHomeGridFragment().getView().invalidate();
+	            	}
 	            	
+	            	
+	            	//HomeActivity.getHomeGridFragment().onCreate(null);
 	            	//generateView((ArrayList<CityEvent>) filterResults.values);
 	            }
 	        };

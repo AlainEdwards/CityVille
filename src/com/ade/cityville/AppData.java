@@ -28,6 +28,8 @@ public class AppData {
 	private static Location currentLocation;
 	private static Context c;
 	public static boolean loggedIn = false;
+	private static boolean educationFilterActivated, communityFilterActivated, entertainmentFilterActivated, familyFilterActivated, musicFilterActivated, foodFilterActivated;
+	private static int currentAgeRestriction;
 	public static String email;
 	private static boolean filtersActivated;
 
@@ -43,6 +45,14 @@ public class AppData {
 		if (c == null){return false;}
 		//Set all the class context here
 		RServer.setContext(c);
+		
+		//Initialize Data here
+		educationFilterActivated = true;
+		communityFilterActivated = true;
+		entertainmentFilterActivated = true;
+		familyFilterActivated = true;
+		musicFilterActivated = true; 
+		foodFilterActivated = true;
 		
 		
 		try {
@@ -148,6 +158,54 @@ public class AppData {
 	    }
 	    return mTrackers.get(trackerId);
 	  }
+	public static boolean checkAgeRestriction(CityEvent ce){
+		if (ce.getAge() < currentAgeRestriction){
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean checkFilters(CityEvent ce){
+		if (educationFilterActivated == true){
+			if (checkEventFilters("education",ce) == false){
+				return false;
+			}
+		}
+		if (communityFilterActivated == true){
+			if (checkEventFilters("community",ce) == false){
+				return false;
+			}
+		}
+		if (entertainmentFilterActivated == true){
+			if (checkEventFilters("entertainment",ce) == false){
+				return false;
+			}
+		}
+		if (familyFilterActivated == true){
+			if (checkEventFilters("family",ce) == false){
+				return false;
+			}
+		}
+		if (musicFilterActivated == true){
+			if (checkEventFilters("music",ce) == false){
+				return false;
+			}
+		}
+		if (foodFilterActivated == true){
+			if (checkEventFilters("food",ce) == false){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static boolean checkEventFilters(String filter, CityEvent ce){
+		
+		if (ce.getTags().contains(filter)){
+			return true;
+		}
+		return false;
+	}
 	/**
 	 * @return the cityEventsList
 	 */
@@ -787,6 +845,105 @@ public class AppData {
 	 */
 	public static void setFiltersActivated(boolean filtersActivated) {
 		AppData.filtersActivated = filtersActivated;
+	}
+
+	/**
+	 * @return the educationFilterActivated
+	 */
+	public static boolean isEducationFilterActivated() {
+		return educationFilterActivated;
+	}
+
+	/**
+	 * @param educationFilterActivated the educationFilterActivated to set
+	 */
+	public static void setEducationFilterActivated(boolean educationFilterActivated) {
+		AppData.educationFilterActivated = educationFilterActivated;
+	}
+
+	/**
+	 * @return the communityFilterActivated
+	 */
+	public static boolean isCommunityFilterActivated() {
+		return communityFilterActivated;
+	}
+
+	/**
+	 * @param communityFilterActivated the communityFilterActivated to set
+	 */
+	public static void setCommunityFilterActivated(boolean communityFilterActivated) {
+		AppData.communityFilterActivated = communityFilterActivated;
+	}
+
+	/**
+	 * @return the entertainmentFilterActivated
+	 */
+	public static boolean isEntertainmentFilterActivated() {
+		return entertainmentFilterActivated;
+	}
+
+	/**
+	 * @param entertainmentFilterActivated the entertainmentFilterActivated to set
+	 */
+	public static void setEntertainmentFilterActivated(
+			boolean entertainmentFilterActivated) {
+		AppData.entertainmentFilterActivated = entertainmentFilterActivated;
+	}
+
+	/**
+	 * @return the familyFilterActivated
+	 */
+	public static boolean isFamilyFilterActivated() {
+		return familyFilterActivated;
+	}
+
+	/**
+	 * @param familyFilterActivated the familyFilterActivated to set
+	 */
+	public static void setFamilyFilterActivated(boolean familyFilterActivated) {
+		AppData.familyFilterActivated = familyFilterActivated;
+	}
+
+	/**
+	 * @return the musicFilterActivated
+	 */
+	public static boolean isMusicFilterActivated() {
+		return musicFilterActivated;
+	}
+
+	/**
+	 * @param musicFilterActivated the musicFilterActivated to set
+	 */
+	public static void setMusicFilterActivated(boolean musicFilterActivated) {
+		AppData.musicFilterActivated = musicFilterActivated;
+	}
+
+	/**
+	 * @return the foodFilterActivated
+	 */
+	public static boolean isFoodFilterActivated() {
+		return foodFilterActivated;
+	}
+
+	/**
+	 * @param foodFilterActivated the foodFilterActivated to set
+	 */
+	public static void setFoodFilterActivated(boolean foodFilterActivated) {
+		AppData.foodFilterActivated = foodFilterActivated;
+	}
+
+	/**
+	 * @return the currentAgeRestriction
+	 */
+	public static int getCurrentAgeRestriction() {
+		return currentAgeRestriction;
+	}
+
+	/**
+	 * @param currentAgeRestriction the currentAgeRestriction to set
+	 */
+	public static void setCurrentAgeRestriction(int currentAgeRestriction) {
+		AppData.currentAgeRestriction = currentAgeRestriction;
 	}
 	
 }

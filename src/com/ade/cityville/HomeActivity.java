@@ -333,4 +333,46 @@ public class HomeActivity extends FragmentActivity implements
 		//AppData.loggedIn = false;
 		SoundManager.cleanup();
 	}
+
+	/**
+	 * @return the homeGridFragment
+	 */
+	public static HomeGridFragment getHomeGridFragment() {
+		return homeGridFragment;
+	}
+
+	/**
+	 * @param homeGridFragment the homeGridFragment to set
+	 */
+	public static void setHomeGridFragment(HomeGridFragment homeGridFragment) {
+		HomeActivity.homeGridFragment = homeGridFragment;
+	}
+
+	/**
+	 * @return the homeListFragment
+	 */
+	public static HomeListFragment getHomeListFragment() {
+		return homeListFragment;
+	}
+
+	/**
+	 * @param homeListFragment the homeListFragment to set
+	 */
+	public static void setHomeListFragment(HomeListFragment homeListFragment) {
+		HomeActivity.homeListFragment = homeListFragment;
+	}
+
+	/**
+	 * @return the homeMapFragment
+	 */
+	public static HomeMapFragment getHomeMapFragment() {
+		return homeMapFragment;
+	}
+
+	/**
+	 * @param homeMapFragment the homeMapFragment to set
+	 */
+	public static void setHomeMapFragment(HomeMapFragment homeMapFragment) {
+		HomeActivity.homeMapFragment = homeMapFragment;
+	}
 }

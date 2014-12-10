@@ -107,8 +107,18 @@ public class HomeEventListAdapter extends ArrayAdapter implements Filterable{
 	                //If there's nothing to filter on, return the original data for your list
 	                if(charSequence == null || charSequence.length() == 0 || charSequence.equals(""))
 	                {
-	                    results.values = filteredEvents;
-	                    results.count = filteredEvents.size();
+	                	ArrayList<CityEvent> checkedEvents = new ArrayList<CityEvent>();
+	                	for (CityEvent ce: filteredEvents){
+		                	if (AppData.checkFilters(ce) && AppData.checkAgeRestriction(ce)){
+		                		checkedEvents.add(ce);
+		                	}
+	                	}
+	                	
+	                	//results.values = filteredEvents;
+                    	//results.count = filteredEvents.size();
+	                	results.values = checkedEvents;
+                    	results.count = checkedEvents.size();
+	                	
 	                }
 	                else
 	                {
@@ -121,7 +131,10 @@ public class HomeEventListAdapter extends ArrayAdapter implements Filterable{
 	                        //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
 	                        if(ce.getName().toLowerCase().contains(charSequence.toString().toLowerCase()))
 	                        {
-	                            filterResultsData.add(ce);
+	                        	if (AppData.checkFilters(ce) && AppData.checkAgeRestriction(ce)){
+	                        		filterResultsData.add(ce);
+	                        	}
+	                            
 	                        }
 	                    }            
 

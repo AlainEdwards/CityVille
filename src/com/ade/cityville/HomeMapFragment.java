@@ -247,8 +247,17 @@ public class HomeMapFragment extends Fragment implements Filterable{
 	                //If there's nothing to filter on, return the original data for your list
 	                if(charSequence == null || charSequence.length() == 0 || charSequence.equals(""))
 	                {
-	                    results.values = AppData.getCityEventsList();
-	                    results.count = AppData.getCityEventsList().size();
+	                	ArrayList<CityEvent> checkedEvents = new ArrayList<CityEvent>();
+	                	for (CityEvent ce: AppData.getCityEventsList()){
+		                	if (AppData.checkFilters(ce) && AppData.checkAgeRestriction(ce)){
+		                		checkedEvents.add(ce);
+		                	}
+	                	}
+	                	
+	                	//results.values = AppData.getCityEventsList();
+	                    //results.count = AppData.getCityEventsList().size();
+	                	results.values = checkedEvents;
+                    	results.count = checkedEvents.size();
 	                }
 	                else
 	                {
@@ -261,7 +270,9 @@ public class HomeMapFragment extends Fragment implements Filterable{
 	                        //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
 	                        if(ce.getName().toLowerCase().contains(charSequence.toString().toLowerCase()))
 	                        {
-	                            filterResultsData.add(ce);
+	                        	if (AppData.checkFilters(ce) && AppData.checkAgeRestriction(ce)){
+	                        		filterResultsData.add(ce);
+	                        	}
 	                        }
 	                    }            
 
